@@ -15,6 +15,7 @@ app.use(morgan("tiny"));
 app.use(bodyparser.json({ limit: "30mb", extended: true }));
 app.use(bodyparser.urlencoded({ limit: "30mb", extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
+const serverless = require('serverless-http');
 app.use(express.json());
 app.use(express.urlencoded());
 const userRoutes = require("./route");
@@ -30,3 +31,4 @@ mongoose
   .catch((err) => err.message);
 const port = process.env.PORT || 5001;
 app.listen(port, () => console.log(`App is running at ${port} `));
+module.exports.handler = serverless(app);
